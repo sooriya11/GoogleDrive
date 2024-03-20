@@ -1,0 +1,130 @@
+package google drive;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class LoginScreenTest {
+	public static void main(String[] args) {
+		ChromeOptions option = new ChromeOptions();
+
+		option.addArguments("--disable-notifications");
+		ChromeDriver driver = new ChromeDriver(option);
+		// ChromeDriver driver = new ChromeDriver();
+		driver.get(
+				"https://accounts.google.com/v3/signin/identifier?continue=http%3A%2F%2Fdrive.google.com%2F%3Futm_source%3Den&ec=asw-drive-globalnav-signin&ifkv=ARZ0qKJKc-cDs5DxZ6BRGgy_HVI4Y64qxR7WcDLqX9DyNigNphR5u5MvcRCRsDH58IWYSi4ZZ5LAHw&ltmpl=drive&passive=true&service=wise&usp=gtd&utm_campaign=web&utm_content=gotodrive&utm_medium=button&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-2097011494%3A1710947206708920&theme=glif&ddm=0");
+
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		// Navigate to the login page
+		
+		// Test with correct email/password combination
+		testCorrectEmailPassword(driver, "sooriyavelavan@gmail.com", "CorrectPassword");
+
+		// Test with incorrect email/password combination
+		testIncorrectEmailPassword(driver, "incorrectemail@example.com", "incorrectpassword");
+
+		// Test with unregistered email
+		testUnregisteredEmail(driver, "unregisteredemail@example.com", "password");
+
+		// Test with correct email and password with wrong case
+		testEmailPasswordWrongCase(driver, "Email@example.com", "Password");
+
+		// Test with very long password
+		testVeryLongPassword(driver, "correctemail@example.com", "averylongpasswordthatexceedsthecharacterlimit");
+
+		// Test with blank password
+		testBlankPassword(driver, "correctemail@example.com", "");
+
+		// Close the browser
+		driver.quit();
+	}
+
+	private static void testCorrectEmailPassword(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.xpath("//input[@type='email']"));
+		WebElement loginButton = driver.findElement(By.xpath("//span[text()='Next']"));
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+		WebElement loginButton1 = driver.findElement(By.xpath("//span[text()='Next']"));
+
+		emailInput.sendKeys(email);
+		loginButton.click();
+		passwordInput.sendKeys(password);
+		loginButton1.click();
+
+		// Add assertion for successful login (e.g., check for welcome message,
+		// redirection to home page, etc.)
+	}
+
+	private static void testIncorrectEmailPassword(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.xpath("//input[@type='email']"));
+		WebElement loginButton = driver.findElement(By.xpath("//span[text()='Next']"));
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+		WebElement loginButton1 = driver.findElement(By.xpath("//span[text()='Next']"));
+
+		emailInput.sendKeys(email);
+		loginButton.click();
+		passwordInput.sendKeys(password);
+		loginButton1.click();
+		// Add assertion for error message indicating incorrect email/password
+		// combination
+	}
+
+	private static void testUnregisteredEmail(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.id("email"));
+		WebElement passwordInput = driver.findElement(By.id("password"));
+		WebElement loginButton = driver.findElement(By.id("login-button"));
+
+		emailInput.sendKeys(email);
+		passwordInput.sendKeys(password);
+		loginButton.click();
+
+		// Add assertion for error message indicating unregistered email
+	}
+
+	private static void testEmailPasswordWrongCase(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.xpath("//input[@type='email']"));
+		WebElement loginButton = driver.findElement(By.xpath("//span[text()='Next']"));
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+		WebElement loginButton1 = driver.findElement(By.xpath("//span[text()='Next']"));
+
+		emailInput.sendKeys(email);
+		loginButton.click();
+		passwordInput.sendKeys(password);
+		loginButton1.click();
+
+		// Add assertion for error message indicating wrong case for email/password
+	}
+
+	private static void testVeryLongPassword(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.xpath("//input[@type='email']"));
+		WebElement loginButton = driver.findElement(By.xpath("//span[text()='Next']"));
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+		WebElement loginButton1 = driver.findElement(By.xpath("//span[text()='Next']"));
+
+		emailInput.sendKeys(email);
+		loginButton.click();
+		passwordInput.sendKeys(password);
+		loginButton1.click();
+
+		// Add assertion for successful login (if very long passwords are allowed)
+	}
+
+	private static void testBlankPassword(WebDriver driver, String email, String password) {
+		WebElement emailInput = driver.findElement(By.xpath("//input[@type='email']"));
+		WebElement loginButton = driver.findElement(By.xpath("//span[text()='Next']"));
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@type='password']"));
+		WebElement loginButton1 = driver.findElement(By.xpath("//span[text()='Next']"));
+
+		emailInput.sendKeys(email);
+		loginButton.click();
+		passwordInput.sendKeys(password);
+		loginButton1.click();
+
+		// Add assertion for error message indicating blank password
+	}
+
+}
